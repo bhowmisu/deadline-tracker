@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             GlobalScope.launch(Dispatchers.IO) {
                 val rand = Random.nextInt(1, 100)
-                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity(rand, "Document $rand"))
+                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity("Document $rand"))
             }
 
         }
