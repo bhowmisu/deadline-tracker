@@ -19,6 +19,7 @@ import com.tyche.deadlinetracker.repo.RepoProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             GlobalScope.launch(Dispatchers.IO) {
                 val rand = Random.nextInt(1, 100)
-                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity("Document $rand"))
+                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity("Document $rand", Calendar.getInstance().time))
             }
 
         }

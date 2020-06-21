@@ -14,5 +14,6 @@ class PersonalDocumentViewHolder constructor(itemView: View) : RecyclerView.View
             this(LayoutInflater.from(parent.context).inflate(R.layout.personal_document_item, parent, false))
     fun bind(personalDocumentEntity: PersonalDocumentEntity) {
         itemView.document_name.text = personalDocumentEntity.name
+        itemView.document_date.text = personalDocumentEntity.expiryDate.toString()
     }
 }

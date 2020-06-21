@@ -7,7 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface PersonalDocumentDao {
-    @Query("SELECT * from personaldocumententity")
+    @Query("SELECT * from personaldocumententity order by expiry_date asc")
     fun getAllPersonalDocumentEntity(): LiveData<List<PersonalDocumentEntity>>
 
     @Insert
