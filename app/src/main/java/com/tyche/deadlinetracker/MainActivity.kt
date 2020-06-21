@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.tyche.deadlinetracker.data.PersonalDocumentEntity
 import com.tyche.deadlinetracker.repo.PersonalDocumentRepo
+import com.tyche.deadlinetracker.repo.RepoProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private lateinit var repo: PersonalDocumentRepo
+//    private lateinit var repo: PersonalDocumentRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +33,13 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        repo = PersonalDocumentRepo(application)
+//        repo = PersonalDocumentRepo(application)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             GlobalScope.launch(Dispatchers.IO) {
                 val rand = Random.nextInt(1, 100)
-                repo.addPersonalDocument(PersonalDocumentEntity(rand, "Document $rand"))
+                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity(rand, "Document $rand"))
             }
 
         }

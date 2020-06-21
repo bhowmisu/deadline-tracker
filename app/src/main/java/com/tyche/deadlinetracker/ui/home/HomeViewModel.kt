@@ -9,6 +9,7 @@ import com.tyche.deadlinetracker.data.PersonalDocumentEntity
 import com.tyche.deadlinetracker.data.PersonalDocumentEntityMapper
 import com.tyche.deadlinetracker.data.PersonalDocumentModelMapper
 import com.tyche.deadlinetracker.repo.PersonalDocumentRepo
+import com.tyche.deadlinetracker.repo.RepoProvider
 import com.tyche.deadlinetracker.ui.model.PersonalDocumentModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,20 +25,25 @@ class HomeViewModel constructor(application: Application): AndroidViewModel(appl
 //        )
 //    }
 
-    private val personalDocumentRepo = PersonalDocumentRepo(application)
+//    private val personalDocumentRepo = PersonalDocumentRepo(application)
 
-    private val _modelLiveData = Transformations.map(personalDocumentRepo.getPersonalDocumentsFromCache()) {
-        it.map {
-            PersonalDocumentModel(it.id, it.name)
+    private val applicationInstance = application
+
+    private val _modelLiveData =
+        RepoProvider.getPersonalDocumentRepo(application)?.getPersonalDocumentsFromCache()?.let {
+            Transformations.map(it) {entities ->
+                entities.map {entity->
+                PersonalDocumentModel(entity.id, entity.name)
+            }
         }
-    }
+        }
 
-    val modelLiveData: LiveData<List<PersonalDocumentModel>> = _modelLiveData
+    val modelLiveData: LiveData<List<PersonalDocumentModel>>? = _modelLiveData
 
 
     fun addPersonalDocument(personalDocumentModel: PersonalDocumentModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            personalDocumentRepo.addPersonalDocument(PersonalDocumentEntityMapper(personalDocumentModel).mapToModel())
+            RepoProvider.getPersonalDocumentRepo(applicationInstance)?.addPersonalDocument(PersonalDocumentEntityMapper(personalDocumentModel).mapToModel())
         }
     }
 
