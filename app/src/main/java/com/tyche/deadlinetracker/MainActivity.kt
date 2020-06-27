@@ -1,5 +1,6 @@
 package com.tyche.deadlinetracker
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -13,9 +14,11 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentTransaction
 import com.tyche.deadlinetracker.data.PersonalDocumentEntity
 import com.tyche.deadlinetracker.repo.PersonalDocumentRepo
 import com.tyche.deadlinetracker.repo.RepoProvider
+import com.tyche.deadlinetracker.ui.main.AddFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,10 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-            GlobalScope.launch(Dispatchers.IO) {
-                val rand = Random.nextInt(1, 100)
-                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity("Document $rand", Calendar.getInstance().time))
-            }
+//            GlobalScope.launch(Dispatchers.IO) {
+//                val rand = Random.nextInt(1, 100)
+//                RepoProvider.getPersonalDocumentRepo(application)?.addPersonalDocument(PersonalDocumentEntity("Document $rand", Calendar.getInstance().time))
+//            }
+
+            val addIntent = Intent(applicationContext, AddActivity::class.java)
+            startActivity(addIntent)
 
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
